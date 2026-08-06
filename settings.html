@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flyrank Settings</title>
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <section class="settings-panel">
+      <div class="page-header">
+        <div>
+          <p class="eyebrow">Profile Settings</p>
+          <h1>Account &amp; preferences</h1>
+          <p class="lead">Update your personal details, security options, and app preferences from one place.</p>
+        </div>
+        <button id="saveButton" class="primary-button">Save changes</button>
+      </div>
+
+      <div class="profile-card">
+        <div class="avatar-stack">
+          <div class="avatar">FR</div>
+          <div>
+            <p class="small-label">Signed in as</p>
+            <strong>Jordan Lee</strong>
+          </div>
+        </div>
+        <p class="profile-copy">Your account profile is used across Flyrank services. Change your display preferences, security settings, and notifications below.</p>
+      </div>
+
+      <form id="settingsForm" class="settings-form" novalidate>
+        <fieldset>
+          <legend>Profile details</legend>
+          <div class="form-grid">
+            <label>
+              Full name
+              <input type="text" name="fullName" id="fullName" placeholder="Jordan Lee" required />
+            </label>
+
+            <label>
+              Email address
+              <input type="email" name="email" id="email" placeholder="jordan@example.com" required />
+            </label>
+
+            <label>
+              Username
+              <input type="text" name="username" id="username" placeholder="flyrank_jordan" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Security</legend>
+          <div class="form-grid">
+            <label>
+              Current password
+              <input type="password" name="currentPassword" id="currentPassword" placeholder="••••••••" />
+            </label>
+
+            <label>
+              New password
+              <input type="password" name="newPassword" id="newPassword" placeholder="Enter new password" />
+            </label>
+
+            <label>
+              Confirm password
+              <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm new password" />
+            </label>
+          </div>
+          <p class="hint">Leave password fields blank if you don’t want to change your password.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Preferences</legend>
+          <div class="toggle-row">
+            <span>Enable notifications</span>
+            <label class="toggle-switch">
+              <input type="checkbox" name="notifications" id="notifications" />
+              <span class="track"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <span>Dark mode</span>
+            <label class="toggle-switch">
+              <input type="checkbox" name="darkMode" id="darkMode" />
+              <span class="track"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <span>Weekly email reports</span>
+            <label class="toggle-switch">
+              <input type="checkbox" name="weeklyReports" id="weeklyReports" />
+              <span class="track"></span>
+            </label>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="notice" id="saveNotice" aria-live="polite">Settings saved successfully.</div>
+    </section>
+  </main>
+  <script src="settings.js"></script>
+</body>
+</html>

@@ -10,14 +10,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-black text-white flex flex-col min-h-screen antialiased">
-        <nav className="w-full bg-neutral-900 border-b border-neutral-800 sticky top-0 z-50">
+      <body className="bg-white text-black flex flex-col min-h-screen antialiased">
+        <nav className="w-full bg-white border-b border-zinc-200 sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <span className="font-bold text-lg tracking-tight text-blue-500">Flyrank Capstone</span>
+            {/* Simple Text Monogram Logo */}
+            <span className="font-extrabold text-xl tracking-tight text-black">
+              F<span className="text-sky-500">.</span>RC
+            </span>
             <div className="flex space-x-6 text-sm font-medium">
-              <Link href="/" className="hover:text-blue-400 transition text-gray-300">Home</Link>
-              <Link href="/profile" className="hover:text-blue-400 transition text-gray-300">Profile</Link>
-              <Link href="/health" className="hover:text-blue-400 text-green-400 font-semibold transition">Health Check</Link>
+              <Link href="/" className="hover:text-sky-500 transition text-zinc-600">Home</Link>
+              <Link href="/profile" className="hover:text-sky-500 transition text-zinc-600">Profile</Link>
+              <Link href="/health" className="hover:text-sky-500 text-sky-600 font-semibold transition">Health Check</Link>
             </div>
           </div>
         </nav>

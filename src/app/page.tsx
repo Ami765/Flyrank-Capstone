@@ -1,59 +1,81 @@
-export default function IdentityKitPage() {
+export default function HomeThroughLinePage() {
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
-      {/* Week 3 Header Statement */}
+      {/* 1. One-Line Claim Value Proposition Section */}
       <div className="border-b border-zinc-200 pb-8 mb-12">
-        <h1 className="text-4xl font-extrabold tracking-tight text-zinc-950 sm:text-5xl">
-          Visual Identity System
+        <span className="text-xs font-semibold uppercase tracking-wider text-sky-600 block mb-2">
+          Core Value Proposition Claim
+        </span>
+        <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950 sm:text-5xl max-w-3xl leading-tight">
+          Building high-performance, AI-driven applications with verified data layer integrity.
         </h1>
-        <p className="mt-4 text-lg text-zinc-600">
-          A minimalist style guide built to display capstone projects cleanly and intentionally.
+        <p className="mt-4 text-base text-zinc-600 max-w-2xl">
+          The single memorable sentence establishing the proof validation objective for my complete capstone portfolio build.
         </p>
       </div>
 
-      {/* Grid Elements */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Typography Section */}
+      {/* 2. Portfolio Structure Content Map Grid */}
+      <div className="space-y-12">
         <div>
-          <h2 className="text-xl font-bold text-zinc-900 mb-4">Typography Kit</h2>
-          <div className="space-y-4">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Heading & Body Font</span>
-              <p className="text-2xl font-semibold text-zinc-900">Inter Sans-Serif</p>
+          <h2 className="text-xl font-bold text-zinc-900 mb-2">2. Architecture Content Map Matrix</h2>
+          <p className="text-zinc-600 text-sm mb-6">
+            Structural layout overview organizing application pathways, page section orders, and primary Calls to Action.
+          </p>
+
+          <div className="space-y-6">
+            {/* Page 1 Matrix Item */}
+            <div className="p-6 border border-zinc-200 rounded-xl bg-zinc-50/50">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 pb-3 mb-4">
+                <h3 className="font-bold text-zinc-900 text-lg">Route: / (Home Landing Workspace)</h3>
+                <span className="inline-flex items-center rounded-md bg-sky-50 px-2 py-1 text-xs font-medium text-sky-700 border border-sky-200">
+                  CTA: View Core Technical Proof
+                </span>
+              </div>
+              <ul className="space-y-2 text-sm text-zinc-600 list-disc list-inside">
+                <li><strong className="text-zinc-900">Section 1:</strong> Hero statement featuring the crisp value proposition claim.</li>
+                <li><strong className="text-zinc-900">Section 2:</strong> Lead Case Study showcase card (Flyrank Resume ATS Engine engine pipeline metrics).</li>
+                <li><strong className="text-zinc-900">Section 3:</strong> Visual identity design tokens and asset swatches.</li>
+              </ul>
             </div>
-            <p className="text-zinc-600 leading-relaxed text-sm">
-              Standardized across all systems to provide maximum cross-device layout readability without adding network bloat.
-            </p>
+
+            {/* Page 2 Matrix Item */}
+            <div className="p-6 border border-zinc-200 rounded-xl bg-zinc-50/50">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 pb-3 mb-4">
+                <h3 className="font-bold text-zinc-900 text-lg">Route: /profile (Curation & Assets)</h3>
+                <span className="inline-flex items-center rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-700 border border-zinc-200">
+                  CTA: Review Design Discipline Logs
+                </span>
+              </div>
+              <ul className="space-y-2 text-sm text-zinc-600 list-disc list-inside">
+                <li><strong className="text-zinc-900">Section 1:</strong> Image optimization table classifying visual styles.</li>
+                <li><strong className="text-zinc-900">Section 2:</strong> Discernment notes listing AI rejections.</li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* Color Swatches */}
-        <div>
-          <h2 className="text-xl font-bold text-zinc-900 mb-4">Color Palette</h2>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center">
-              <div className="h-16 w-full rounded-lg bg-black border border-zinc-200 mb-1"></div>
-              <span className="text-xs font-mono">#000000</span>
+        {/* 3. Honest Proof Gathering Checklist */}
+        <div className="border-t border-zinc-200 pt-8">
+          <h2 className="text-xl font-bold text-zinc-900 mb-4">3. Outstanding Assets Sync Tracker (Gather List)</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div className="p-4 border border-zinc-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" disabled className="mt-1 h-4 w-4 rounded border-zinc-300 text-sky-600 focus:ring-sky-500" />
+              <div>
+                <strong className="text-zinc-900 block">Resume ATS Codebase Screenshots</strong>
+                <span className="text-zinc-500 text-xs">High-resolution, cropped layout views of the working parser module.</span>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="h-16 w-full rounded-lg bg-white border border-zinc-200 mb-1"></div>
-              <span className="text-xs font-mono">#FFFFFF</span>
-            </div>
-            <div className="text-center">
-              <div className="h-16 w-full rounded-lg bg-sky-500 mb-1"></div>
-              <span className="text-xs font-mono">#0EA5E9</span>
+
+            <div className="p-4 border border-zinc-200 rounded-xl flex items-start gap-3">
+              <input type="checkbox" disabled className="mt-1 h-4 w-4 rounded border-zinc-300 text-sky-600 focus:ring-sky-500" />
+              <div>
+                <strong className="text-zinc-900 block">Before / After Processing Metrics</strong>
+                <span className="text-zinc-500 text-xs">Empirical benchmarking figures outlining structural data pipeline speed improvements.</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Two-Line Style Note Annotation */}
-      <div className="mt-12 bg-zinc-50 border border-zinc-200 rounded-xl p-6 font-mono text-xs">
-        <p className="text-zinc-400 font-bold mb-1">// Style Guide Note Metadata:</p>
-        <p className="text-zinc-800">Fonts: Inter UI System. Colors: #000000, #FFFFFF, Accent: #0EA5E9.</p>
-        <p className="text-zinc-800 mt-1">Mood: High-utility layout framework optimized for clean code case study reviews.</p>
       </div>
     </div>
   );
 }
-

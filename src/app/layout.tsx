@@ -19,7 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="flex space-x-6 text-sm font-medium">
               <Link href="/" className="hover:text-sky-500 transition text-zinc-600">Home</Link>
               <Link href="/profile" className="hover:text-sky-500 transition text-zinc-600">Profile</Link>
-              <Link href="/playground" className="hover:text-sky-500 transition text-zinc-600 font-medium">Playground</Link>
+              <Link href="/playground" className="hover:text-sky-500 transition text-zinc-600">Playground</Link>
+              <Link href="/chat" className="hover:text-sky-500 transition text-zinc-950 font-bold">Streaming Chat</Link>
               <Link href="/health" className="hover:text-sky-500 text-sky-600 font-semibold transition">Health Check</Link>
             </div>
           </div>

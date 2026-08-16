@@ -1,12 +1,11 @@
 "use client";
 
-// Swapped target path directly to the core package to bypass the resolution error
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import { Square, Send, ArrowDown, User, Bot } from "lucide-react";
 
 export default function StreamingChatPage() {
-  const chatInstance = useChat({
+      const chatInstance = useChat({
     api: "/api/chat",
     initialMessages: [
       {
@@ -17,8 +16,25 @@ export default function StreamingChatPage() {
     ]
   } as any);
 
-  // Safely extract the hooks using a standard untyped layout container
-  const { messages, input, handleInputChange, handleSubmit, isLoading, stop } = chatInstance as any;
+  const { messages, input, handleInputChange, handleSubmit, status, stop } = chatInstance as any;
+  const isCurrentlyLoading = status === "streaming" || status === "submitted";
+
+//   const chatInstance = useChat({
+//     api: "/api/chat",
+//     initialMessages: [
+//       {
+//         id: "welcome",
+//         role: "assistant",
+//         content: "Hello! I am your Flyrank Capstone Agent. Ask me anything about your project qualification workflow."
+//       }
+//     ]
+//   });
+
+//   // Modern v4 AI SDK extracts explicit parameter methods cleanly
+//   const { messages, input, handleInputChange, handleSubmit, status, stop } = chatInstance;
+
+  // Unlocks the UI based on the updated state definitions
+//   const isCurrentlyLoading = status === "streaming" || status === "submitted";
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
@@ -78,7 +94,7 @@ export default function StreamingChatPage() {
           </div>
         ))}
 
-        {isLoading && messages && messages[messages.length - 1]?.role === "user" && (
+        {isCurrentlyLoading && messages && messages[messages.length - 1]?.role === "user" && (
           <div className="flex gap-3 mr-auto">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-sky-50 border-sky-200 text-sky-600">
               <Bot size={16} />
@@ -106,12 +122,12 @@ export default function StreamingChatPage() {
           <input
             value={input || ""}
             onChange={handleInputChange}
-            placeholder={isLoading ? "Streaming response..." : "Type your message..."}
-            disabled={isLoading}
+            placeholder={isCurrentlyLoading ? "Streaming response..." : "Type your message..."}
+            disabled={isCurrentlyLoading}
             className="flex-1 min-w-0 rounded-xl border border-zinc-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 bg-zinc-50/50 disabled:opacity-60 disabled:cursor-not-allowed text-zinc-900"
           />
 
-          {isLoading ? (
+          {isCurrentlyLoading ? (
             <button
               type="button"
               onClick={stop}

@@ -2,35 +2,21 @@
 
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
-import { Send, Loader2, CheckCircle2, AlertTriangle, BarChart2, User, Bot } from "lucide-react";
+import { Send, Loader2, CheckCircle2, AlertTriangle, BarChart2, User, Bot, RefreshCw, Sparkles, HelpCircle } from "lucide-react";
 
 export default function StreamingChatPage() {
   const [typedInput, setTypedInput] = useState("");
-    const chatInstance = useChat({
-    maxSteps: 5, // Allows the model to autonomously execute tool calls back to back
-    initialMessages: [
-      {
-        id: "welcome",
-        role: "assistant",
-        content: "Hello! Ask me to 'score a candidate profile' or type 'evaluate candidate named fail' to view the error component state."
-      }
-    ]
+  const [customError, setCustomError] = useState<string | null>(null);
+
+  const chatInstance = useChat({
+    maxSteps: 5,
+    initialMessages: [],
+    onError: (error: any) => {
+      setCustomError(error.message || "An unexpected API streaming disruption occurred.");
+    }
   } as any);
 
-
-  // const chatInstance = useChat({
-  //   api: "/api/chat",
-  //   initialMessages: [
-  //     {
-  //       id: "welcome",
-  //       role: "assistant",
-  //       content: "Hello! Ask me to 'score a candidate profile' or type 'evaluate candidate named fail' to view the error component state."
-  //     }
-  //   ]
-  // });
-
-  // Extract variables via loose object cast to bypass type version mismatches safely
-  const { messages, input, handleInputChange, handleSubmit, status } = chatInstance as any;
+  const { messages, handleSubmit, status, reload } = chatInstance as any;
   const isCurrentlyLoading = status === "streaming" || status === "submitted";
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -52,6 +38,7 @@ export default function StreamingChatPage() {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!typedInput.trim()) return;
+    setCustomError(null);
 
     if ((chatInstance as any).append) {
       (chatInstance as any).append({ role: "user", content: typedInput });
@@ -62,19 +49,56 @@ export default function StreamingChatPage() {
     setTypedInput("");
   };
 
+  const handleOnboardingClick = (suggestion: string) => {
+    setTypedInput(suggestion);
+  };
+
   return (
-    <div className="max-w-4xl mx-auto flex flex-col h-[80vh] border border-zinc-200 rounded-2xl bg-white overflow-hidden shadow-sm mt-4 relative">
+    <div className="max-w-4xl mx-auto flex flex-col h-[82vh] border border-zinc-200 rounded-2xl bg-white overflow-hidden shadow-sm mt-4 relative">
       <div className="bg-zinc-50 border-b border-zinc-200 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-lg font-bold text-zinc-900 flex items-center gap-2">
-            Generative UI Tool Stream
-            <span className="inline-flex h-2 w-2 rounded-full bg-sky-500 animate-pulse" />
+            Capstone Robust Stream
+            <span className={`inline-flex h-2 w-2 rounded-full ${customError ? 'bg-red-500' : isCurrentlyLoading ? 'bg-amber-500 animate-pulse' : 'bg-green-500'}`} />
           </h1>
-          <p className="text-xs text-zinc-500">Gemini 1.5 Flash Tool Invocations via Zod Validation Primitives</p>
+          <p className="text-xs text-zinc-500">Checkpoint 1: Resilient State Machines with Active Crash Overrides</p>
         </div>
       </div>
 
       <div ref={scrollContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto p-6 space-y-4 bg-zinc-50/30">
+        {messages.length === 0 && !customError && (
+          <div className="h-full flex flex-col items-center justify-center text-center max-w-md mx-auto space-y-6 py-12">
+            <div className="bg-sky-50 text-sky-600 p-4 rounded-full border border-sky-100 shadow-sm">
+              <Sparkles size={28} />
+            </div>
+            <div>
+              <h2 className="text-xl font-extrabold text-zinc-900 tracking-tight">Personal Agent Workspace</h2>
+              <p className="text-sm text-zinc-500 mt-2 leading-relaxed">
+                Welcome to your Checkpoint 1 testing sheet. The channel is open and ready. Pick a fast execution template below to begin.
+              </p>
+            </div>
+            <div className="w-full space-y-2 text-left">
+              <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider px-1 flex items-center gap-1">
+                <HelpCircle size={12}/> Click to Auto-Fill Action:
+              </p>
+              <button 
+                type="button"
+                onClick={() => handleOnboardingClick("Score a professional candidate profile for Alice applying for a senior frontend developer position")}
+                className="w-full p-3 text-xs font-semibold border border-zinc-200 text-zinc-700 bg-white hover:bg-zinc-50 rounded-xl transition text-left block shadow-sm truncate"
+              >
+                ✦ Run Success Path: Score Candidate Alice
+              </button>
+              <button 
+                type="button"
+                onClick={() => handleOnboardingClick("evaluate candidate named fail")}
+                className="w-full p-3 text-xs font-semibold border border-zinc-200 text-zinc-700 bg-white hover:bg-zinc-50 rounded-xl transition text-left block shadow-sm truncate"
+              >
+                ✦ Run Sabotage Path: Trigger Designed Tool Error
+              </button>
+            </div>
+          </div>
+        )}
+
         {messages && messages.map((m: any) => (
           <div key={m.id} className="space-y-3">
             {m.content && (
@@ -96,7 +120,6 @@ export default function StreamingChatPage() {
               const { toolCallId, toolName, state, args, result } = toolInv;
               if (toolName !== "scoreCandidate") return null;
 
-              // State 1 & 2: Input Streaming & Available
               if (state === "partial" || !result) {
                 return (
                   <div key={toolCallId} className="max-w-md mr-auto bg-zinc-50 border border-zinc-200 rounded-xl p-4 shadow-sm animate-pulse flex items-center gap-3">
@@ -109,7 +132,6 @@ export default function StreamingChatPage() {
                 );
               }
 
-              // State 4: Output Error Component
               if (result.error || !result.success) {
                 return (
                   <div key={toolCallId} className="max-w-md mr-auto border border-red-200 bg-red-50/50 rounded-xl p-4 shadow-sm flex gap-3">
@@ -125,7 +147,6 @@ export default function StreamingChatPage() {
                 );
               }
 
-              // State 3: Output Available Custom Component
               return (
                 <div key={toolCallId} className="max-w-md mr-auto border border-zinc-200 bg-white rounded-2xl p-5 shadow-md space-y-4">
                   <div className="flex justify-between items-start border-b border-zinc-100 pb-3">
@@ -146,7 +167,7 @@ export default function StreamingChatPage() {
                     <span className="text-xs font-semibold text-zinc-500 flex items-center gap-1"><BarChart2 size={12}/> Alignment Distribution</span>
                     <div className="w-full bg-zinc-100 rounded-full h-3.5 overflow-hidden p-0.5 border border-zinc-200 shadow-inner">
                       <div 
-                        className={`h-full rounded-full transition-all bg-emerald-500`}
+                        className="h-full rounded-full bg-emerald-500"
                         style={{ width: `${result.score}%` }}
                       />
                     </div>
@@ -161,20 +182,44 @@ export default function StreamingChatPage() {
             })}
           </div>
         ))}
+
+                {/* Global Error Disruption Element */}
+        {customError && (
+          <div className="max-w-xl mx-auto border-2 border-red-200 bg-red-50/30 p-5 rounded-2xl shadow-sm space-y-3">
+            <div className="flex items-center gap-2.5 text-red-600 font-bold text-sm">
+              <AlertTriangle size={18} />
+              <span>Mid-Stream Communication Interruption</span>
+            </div>
+            <p className="text-xs text-zinc-600 leading-relaxed">
+              The streaming tool runtime encountered an unexpected disruption. This may be due to temporary network loss or api configuration constraints.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setCustomError(null);
+                if (reload) reload();
+              }}
+              className="inline-flex items-center gap-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 shadow-sm transition active:scale-95"
+            >
+              <RefreshCw size={12} /> Retry Failed Message
+            </button>
+          </div>
+        )}
       </div>
 
+      {/* Input Action Form Area */}
       <div className="p-4 border-t border-zinc-200 bg-white">
         <form onSubmit={handleFormSubmit} className="flex gap-2 items-center max-w-full">
           <input
             value={typedInput}
             onChange={(e) => setTypedInput(e.target.value)}
-            placeholder={isCurrentlyLoading ? "Streaming token parameters..." : "Ask me to score a profile..."}
+            placeholder={isCurrentlyLoading ? "Streaming token parameters..." : "Type your message or use a guide button..."}
             disabled={isCurrentlyLoading}
             className="flex-1 min-w-0 rounded-xl border border-zinc-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 bg-zinc-50/50 disabled:opacity-60 text-zinc-900"
           />
           <button
             type="submit"
-            disabled={!typedInput.trim()}
+            disabled={!typedInput.trim() || isCurrentlyLoading}
             className="bg-sky-600 hover:bg-sky-500 text-white rounded-xl p-3 shrink-0 flex items-center justify-center disabled:opacity-40 shadow-sm"
           >
             <Send size={16} />
